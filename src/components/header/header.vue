@@ -17,15 +17,67 @@
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
+      <div v-if="seller.supports" class="support-count" @click="showDetail">
+        <span class="count">{{seller.supports.length}}个</span>
+        <i class="icon-keyboard_arrow_right"></i>
+      </div>
     </div>
-    <div class="bulltin-wrapper"></div>
+    <div class="bulletin-wrapper" @click="showDetail">
+      <span class="bulletin-title"></span>
+      <span class="bulletin-text">{{seller.bulletin}}</span>
+      <i class="icon-keyboard_arrow_right"></i>
+    </div>
+    <div class="background">
+      <img :src="seller.avatar" width="100%" height="100%" alt="">
+    </div>
+    <transition name="fade">
+    <div v-show="detailShow" class="detail">
+      <div class="detail-wrapper clearfix">
+        <div class="detail-main">
+          <h1 class="name">{{seller.name}}</h1>
+          <div class="star-wrapper">
+            <star :size="48" :score="seller.score"></star>
+          </div>
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">优惠信息</div>
+            <div class="line"></div>
+          </div>
+          <ul v-if="seller.supports" class="supports">
+            <li class="support-item" v-for="(item,index) in seller.supports">
+              <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+              <span class="text">{{seller.supports[index].description}}</span>
+            </li>
+          </ul>
+
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">商家公告</div>
+            <div class="line"></div>
+          </div>
+
+          <div class="bulletin">
+            <p class="content">{{seller.bulletin}}</p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="detail-close" @click="hideDetail">
+        <i class="icon-close"></i>
+      </div>
+    </div>
+    </transition>
   </div>
 </template>
 <script>
+import star from '@/components/star/star'
 export default {
   name: '',
   data () {
-    return {}
+    return {
+      detailShow: false
+    }
   },
   props: {
     seller: {
@@ -34,83 +86,23 @@ export default {
   },
   created: function () {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  },
+  methods: {
+    showDetail () {
+      this.detailShow = true
+    },
+    hideDetail () {
+      this.detailShow = false
+    }
+  },
+  components: {
+    star
   }
 }
 // console.log('子组件' + this.seller)
 </script>
 <style lang="scss">
-@import "~@/common/scss/mixin.scss";
+@import '~@/common/scss/mixin.scss';
+@import 'header.scss';
 
-.header {
-  color: #fff;
-  background: #000;
-  .content-wrapper {
-    padding: 24px 12px 18px 24px;
-    font-size: 0;
-    .avatar {
-      display: inline-block;
-      vertical-align: top;
-      img{
-        border-radius: 2px;
-      }
-    }
-    .content {
-      display: inline-block;
-      margin-left: 16px;
-      .title {
-        margin: 2px 0 8px 0;
-        .brand {
-          display: inline-block;
-          vertical-align: top;
-          width: 30px;
-          height: 18px;
-          @include bg-image('brand');
-          background-size: 30px 18px;
-        }
-        .name {
-          margin-left: 6px;
-          font-size: 16px;
-          line-height: 18px;
-          font-weight: bold;
-        }
-      }
-      .description{
-        margin-bottom: 10px;
-        font-size: 12px;
-        line-height: 12px;
-      }
-      .support{
-        .icon{
-          display: inline-block;
-          vertical-align: top;
-          width: 12px;
-          height: 12px;
-          margin-right: 4px;
-          background-size: 12px 12px;
-          background-repeat: no-repeat;
-          &.decrease{
-            @include bg-image('decrease_1');
-          }
-          &.discount{
-            @include bg-image('discount_1');
-          }
-          &.invoice{
-            @include bg-image('invoice_1');
-          }
-          &.special{
-            @include bg-image('special_1');
-          }
-          &.guarantee{
-            @include bg-image('guarantee_1');
-          }
-          
-        }
-        .text{
-          line-height: 12px;
-          font-size: 12px;
-        }
-      }
-    }
-  }
-}
 </style>

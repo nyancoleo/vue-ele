@@ -23,7 +23,7 @@ const proxyTable = config.dev.proxyTable
 
 const app = express()
 // mock数据
-const appData = require('../data.json')
+const appData = require('../server/mock/data.json')
 const seller = appData.seller
 const goods = appData.goods
 const ratings = appData.ratings

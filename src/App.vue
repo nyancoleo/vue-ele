@@ -14,7 +14,7 @@
       <!-- <keep-alive>
     <router-view  v-if="$router.meta.keepAlive"></router-view>
   </keep-alive> -->
-      <router-view></router-view>
+      <router-view :seller="seller"></router-view>
     </div>
   </div>
 </template>

@@ -31,7 +31,8 @@
                     <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                   </div>
                   <div class="cartcontrol-wrapper">
-                    <cartcontrol :food="food"></cartcontrol>
+                    <!-- NOTE: 2.参数接受,调用addFood函数 -->
+                    <cartcontrol @add="addFood" :food="food"></cartcontrol>
                   </div>
                 </p>
               </div>
@@ -40,7 +41,8 @@
         </li>
       </ul>
     </div>
-    <shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <shopcart ref="shopcart" :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice">
+    </shopcart>
   </div>
 </template>
 <script>
@@ -140,6 +142,16 @@ export default {
       let el = foodlist[index]
       this.foodsScroll.scrollToElement(el, 300)
       console.log(index)
+    },
+    addFood(target) {
+      this._drop(target)
+    },
+    // NOTE: 3.与shopcart通信,调用它的drop函数
+    _drop(target) {
+      // 体验优化异步执行下落动画
+      this.$nextTick(() => {
+        this.$refs.shopcart.drop(target)
+      })
     }
   },
   components: {

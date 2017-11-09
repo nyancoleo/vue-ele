@@ -1,20 +1,30 @@
 <template>
   <div id="app">
-    <div class="header">
-      <v-header :seller="seller"></v-header>
-    </div>
+    <v-header :seller="seller"></v-header>
 
+    <!-- <div class="tab border-1px">
+        <div v-for="item in tabList" class="tab-item">
+          <router-link :to="item.href" v-link-active="">{{item.name}}</router-link>
+        </div>
+      </div> -->
     <div class="tab border-1px">
-      <div v-for="item in tabList" class="tab-item">
-        <router-link :to="item.href">{{item.name}}</router-link>
+      <div class="tab-item">
+        <router-link to="/goods">商品</router-link>
       </div>
-
+      <div class="tab-item">
+        <router-link to="/ratings">评论</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/seller">商家</router-link>
+      </div>
     </div>
     <div class="content">
       <!-- <keep-alive>
-    <router-view  v-if="$router.meta.keepAlive"></router-view>
-  </keep-alive> -->
-      <router-view :seller="seller"></router-view>
+      <router-view  v-if="$router.meta.keepAlive"></router-view>
+    </keep-alive> -->
+      <keep-alive>
+        <router-view :seller="seller"></router-view>
+      </keep-alive>
     </div>
   </div>
 </template>
@@ -27,7 +37,7 @@ import header from '@/components/header/header'
 
 export default {
   name: 'app',
-  data () {
+  data() {
     return {
       seller: {},
       tabList: [
@@ -50,7 +60,7 @@ export default {
     this.getseller()
   },
   methods: {
-    getseller () {
+    getseller() {
       axios
         .get('/api/seller')
         .then((response) => {
@@ -75,7 +85,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/common/scss/mixin.scss';
+@import "~@/common/scss/mixin.scss";
 #app {
   .tab {
     display: flex;
@@ -102,6 +112,9 @@ export default {
           color: rgb(240, 20, 20);
         }
         &:active {
+          color: rgb(240, 20, 20);
+        }
+        &.activeClass {
           color: rgb(240, 20, 20);
         }
       }

@@ -9,25 +9,29 @@ Vue.config.debug = true
 Vue.use(Router)
 
 export default new Router({
+  linkActiveClass: 'activeClass',
   mode: 'history',
-  routes: [{
-  //   path: '/'
-  // },
-  // { // name: 'goods',
-    path: '/goods',
-    component: goods
-  },
-  {
-    path: '/ratings',
-    component: ratings
-  },
-  {
-    path: '/seller',
-    component: seller
-  },
-  {
-    path: '*',
-    redirect: '/goods'
-  }]
+  routes: [
+    {
+      path: '/',
+      redirect: '/goods'
+    },
+    { // name: 'goods',
+      path: '/goods',
+      component: goods
+    },
+    {
+      path: '/ratings',
+      component: ratings
+    },
+    {
+      path: '/seller',
+      component: seller
+    },
+    {
+      path: '*',
+      redirect: '/goods'
+    }
+  ]
 })
 // Router.push('/goods')
